@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { Navigate } from "react-router-dom";
 const modules = {
   toolbar: [
     ["bold", "italic", "underline", "strike"],
@@ -40,9 +41,32 @@ export default function CreatePage() {
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
   const [content, setContent] = useState("");
+  const [files, setFiles] = useState("");
+  const [redirect, setRedirect] = useState(false);
+  async function createPost(ev){
+    const data = new FormData();
+    data.set("title", title);
+    data.set("summary", summary);
+    data.set("content", content);
+    data.set("files", files[0]);
+    ev.preventDefault();
+    console.log(files);
+    const response = await fetch("http://localhost:4000/post",{
+      method: "POST",
+      body: data,
+      // headers: { 'Content-Type': "application/json" },
+      // credentials: "include",
+    })
+    if (response.ok){
+      setRedirect(true);
+    }
+  };
 
+  if (redirect) {
+    return <Navigate to={"/"} />;
+  }
   return (
-    <form>
+    <form onSubmit={createPost}>
       <input
         type="text"
         placeholder={"Title"}
@@ -55,7 +79,7 @@ export default function CreatePage() {
         value={summary}
         onChange={(ev) => setSummary(ev.target.value)}
       />
-      <input type="file" />
+      <input type="file" onChange={(ev) => setFiles(ev.target.files)} />
       <ReactQuill
         value={content}
         onChange={(newValue) => setContent(newValue)}

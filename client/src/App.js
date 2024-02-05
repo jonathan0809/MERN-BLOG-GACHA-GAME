@@ -6,9 +6,8 @@ import Layout from "./Layout";
 import IndexPage from "./Pages/indexPage";
 import LoginPage from "./Pages/LoginPage";
 import RegisterPage from "./Pages/RegisterPage";
-import { UserContextProvider } from "./UserContext";
+import { UserContextProvider } from "./userContext";
 import CreatePage from "./Pages/CreatePage";
-
 
 function App() {
   return (

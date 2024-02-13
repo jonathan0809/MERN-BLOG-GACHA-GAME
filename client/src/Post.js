@@ -1,20 +1,18 @@
-import Arknights from "./GachaGamesIcon/Arknights.png";
-export default function Post(){
+// import Arknights from "./GachaGamesIcon/Arknights.png";
+import {formatISO9075} from "date-fns"
+export default function Post({tittle, summary, content, cover, createdAt, author}) {
+
     return (
         <div className="post">
         <div className="image">
-          <img src={Arknights} alt=""></img>
+          <img src={"http://localhost:4000/"+cover} alt=""></img>
         </div>
         <div className="text">
-        <h2>Gacha game: Arknights</h2>
-          <p className="description">
-            Arknights (Chinese: 明日方舟; pinyin: Míngrì Fāngzhōu; lit. 'Ark of
-            Tomorrow') is a free-to-play tactical RPG/tower defense mobile game
-            developed by Chinese developer Hypergryph.
-          </p>
+        <h2>{tittle}</h2>
+          <p>{summary}</p>
           <p className="info">
-            <a className="author">Jonah</a>
-            <time>25/01/2024 19:54</time>
+            <a className="author">{author.username}</a>
+            <time>{formatISO9075(new Date(createdAt))}</time>
           </p>
         </div>
       </div>

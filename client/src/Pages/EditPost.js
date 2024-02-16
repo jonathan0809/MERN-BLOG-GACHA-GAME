@@ -11,15 +11,15 @@ export default function EditPost() {
     const [redirect, setRedirect] = useState("");
 
     useEffect(() => {
-        fetch("http://localhost:4000/post/" + id)
-        .then((response) => {
-            response.json().then(postInfo => {
-                setTitle(postInfo.title);
-                setSummary(postInfo.summary);
-                setContent(postInfo.content);
-            });
-        });
-    }, []);
+    fetch("http://localhost:4000/post/"+id)
+      .then((response) => response.json())
+      .then((postInfo) => {
+        setTitle(postInfo.title);
+        setContent(postInfo.content);
+        setSummary(postInfo.summary);
+      });
+  }, []);
+
 
     function updatePost(ev){
         ev.preventDefault();
@@ -43,7 +43,7 @@ export default function EditPost() {
             onChange={(ev) => setSummary(ev.target.value)}
           />
           <input type="file" onChange={(ev) => setFiles(ev.target.files)} />
-          <Editor onChange={setContent} value={content} />
+          <Editor value={content} onChange={setContent} />
           <button style={{ marginTop: "5px" }}>Create Post</button>
         </form>
       );
